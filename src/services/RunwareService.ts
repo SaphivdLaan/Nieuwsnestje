@@ -1,4 +1,3 @@
-
 import { toast } from "sonner";
 
 const API_ENDPOINT = "wss://ws-api.runware.ai/v1";
@@ -14,6 +13,8 @@ export interface GenerateImageParams {
   promptWeighting?: "compel" | "sdEmbeds";
   seed?: number | null;
   lora?: string[];
+  width?: number;
+  height?: number;
 }
 
 export interface GeneratedImage {
@@ -132,8 +133,8 @@ export class RunwareService {
         taskType: "imageInference",
         taskUUID,
         model: params.model || "runware:100@1",
-        width: 512,
-        height: 512,
+        width: params.width || 512,
+        height: params.height || 512,
         numberResults: params.numberResults || 1,
         outputFormat: params.outputFormat || "WEBP",
         steps: 4,
