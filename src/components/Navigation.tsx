@@ -19,10 +19,14 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div 
-            className="font-heebo-black font-black text-2xl text-theme-dark cursor-pointer"
+            className="cursor-pointer flex items-center"
             onClick={() => navigate('/')}
           >
-            DierNieuws 🐾
+            <img 
+              src="/lovable-uploads/c9750372-48d1-4f83-8ad5-2142b891b6e3.png" 
+              alt="DierNieuws Logo" 
+              className="h-12 w-auto"
+            />
           </div>
           
           <div className="flex space-x-2">
