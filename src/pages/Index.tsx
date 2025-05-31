@@ -26,7 +26,7 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="font-heebo-black font-black text-6xl text-theme-dark mb-4">
-            DierNieuws
+            Nieuws nestje
           </h1>
           <p className="text-xl text-theme-dark/70 max-w-2xl mx-auto">
             Leer over de wereld door voor je eigen virtuele diertje te zorgen! 
