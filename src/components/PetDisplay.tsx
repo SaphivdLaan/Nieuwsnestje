@@ -1,7 +1,9 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Utensils } from "lucide-react";
+import { RunwareService } from "@/services/RunwareService";
+import ApiKeyInput from "./ApiKeyInput";
 
 interface Pet {
   name: string;
@@ -20,6 +22,10 @@ interface PetDisplayProps {
 
 const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
+  const [petImage, setPetImage] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [apiKey, setApiKey] = useState<string | null>(null);
+  const [runwareService, setRunwareService] = useState<RunwareService | null>(null);
 
   const handlePetClick = () => {
     setIsAnimating(true);
@@ -45,20 +51,83 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
     return emojis[type] || '🐾';
   };
 
+  const generatePetPrompt = (type: string, color: string) => {
+    const prompts: { [key: string]: string } = {
+      konijn: "cute fluffy baby bunny rabbit, adorable kawaii style, soft fur, big round eyes, sitting pose, pastel colors, studio lighting, white background, high quality, detailed",
+      kat: "adorable baby kitten, fluffy fur, big round eyes, kawaii style, cute sitting pose, soft lighting, white background, high quality, detailed",
+      hond: "cute puppy dog, fluffy soft fur, big round eyes, adorable kawaii style, sitting pose, pastel colors, white background, high quality, detailed",
+      hamster: "cute baby hamster, fluffy fur, tiny paws, big round eyes, kawaii style, sitting pose, white background, high quality, detailed",
+      vogel: "cute baby bird, fluffy feathers, big round eyes, adorable kawaii style, perched pose, pastel colors, white background, high quality, detailed",
+      vis: "cute cartoon fish, big round eyes, adorable kawaii style, colorful scales, swimming pose, white background, high quality, detailed",
+      schildpad: "cute baby turtle, adorable shell, big round eyes, kawaii style, sitting pose, pastel colors, white background, high quality, detailed"
+    };
+    return prompts[type] || "cute adorable baby animal, kawaii style, big round eyes, soft fur, white background, high quality, detailed";
+  };
+
+  const generatePetImage = async () => {
+    if (!runwareService) return;
+    
+    setIsGenerating(true);
+    try {
+      const prompt = generatePetPrompt(pet.type, pet.color);
+      const result = await runwareService.generateImage({
+        positivePrompt: prompt,
+        model: "runware:100@1",
+        numberResults: 1,
+        outputFormat: "WEBP",
+        CFGScale: 1,
+        width: 512,
+        height: 512
+      });
+      
+      setPetImage(result.imageURL);
+    } catch (error) {
+      console.error("Error generating pet image:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleApiKeySubmit = (key: string) => {
+    setApiKey(key);
+    const service = new RunwareService(key);
+    setRunwareService(service);
+  };
+
+  useEffect(() => {
+    if (runwareService && !petImage && !isGenerating) {
+      generatePetImage();
+    }
+  }, [runwareService, petImage, pet.type, pet.color]);
+
+  if (!apiKey) {
+    return <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />;
+  }
+
   return (
     <Card className="bg-theme-white border-2 border-theme-green/50 hover:border-theme-green transition-all duration-300">
       <CardContent className="p-6 text-center">
         {/* Pet Avatar */}
         <div 
-          className={`${sizeClasses[size]} mx-auto mb-4 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
+          className={`${sizeClasses[size]} mx-auto mb-4 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden ${
             isAnimating ? 'animate-grow' : 'hover:scale-110'
           }`}
           style={{ backgroundColor: pet.color }}
           onClick={handlePetClick}
         >
-          <span className="text-4xl" style={{ fontSize: size === 'large' ? '4rem' : size === 'medium' ? '2rem' : '1rem' }}>
-            {getEmoji(pet.type)}
-          </span>
+          {isGenerating ? (
+            <div className="text-2xl animate-pulse">⏳</div>
+          ) : petImage ? (
+            <img 
+              src={petImage} 
+              alt={`${pet.name} de ${pet.type}`}
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            <span className="text-4xl" style={{ fontSize: size === 'large' ? '4rem' : size === 'medium' ? '2rem' : '1rem' }}>
+              {getEmoji(pet.type)}
+            </span>
+          )}
         </div>
 
         {/* Pet Name and Level */}
