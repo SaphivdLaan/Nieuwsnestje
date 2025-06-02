@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 
 const API_ENDPOINT = "wss://ws-api.runware.ai/v1";
+const API_KEY = "a2YpAY4FRY8TpJJdO7sEuqSbKeYLBJ2C";
 
 export interface GenerateImageParams {
   positivePrompt: string;
@@ -26,14 +27,14 @@ export interface GeneratedImage {
 
 export class RunwareService {
   private ws: WebSocket | null = null;
-  private apiKey: string | null = null;
+  private apiKey: string;
   private connectionSessionUUID: string | null = null;
   private messageCallbacks: Map<string, (data: any) => void> = new Map();
   private isAuthenticated: boolean = false;
   private connectionPromise: Promise<void> | null = null;
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+  constructor() {
+    this.apiKey = API_KEY;
     this.connectionPromise = this.connect();
   }
 

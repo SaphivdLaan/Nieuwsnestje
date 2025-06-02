@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Utensils } from "lucide-react";
 import { RunwareService } from "@/services/RunwareService";
-import ApiKeyInput from "./ApiKeyInput";
 
 interface Pet {
   name: string;
@@ -12,6 +11,7 @@ interface Pet {
   hunger: number;
   level: number;
   color: string;
+  accessories?: string;
 }
 
 interface PetDisplayProps {
@@ -24,8 +24,7 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
   const [isAnimating, setIsAnimating] = useState(false);
   const [petImage, setPetImage] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [apiKey, setApiKey] = useState<string | null>(null);
-  const [runwareService, setRunwareService] = useState<RunwareService | null>(null);
+  const [runwareService] = useState(() => new RunwareService());
 
   const handlePetClick = () => {
     setIsAnimating(true);
@@ -34,8 +33,8 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
 
   const sizeClasses = {
     small: 'w-16 h-16',
-    medium: 'w-32 h-32',
-    large: 'w-48 h-48'
+    medium: 'w-48 h-48',
+    large: 'w-64 h-64'
   };
 
   const getEmoji = (type: string) => {
@@ -51,8 +50,8 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
     return emojis[type] || '🐾';
   };
 
-  const generatePetPrompt = (type: string, color: string) => {
-    const prompts: { [key: string]: string } = {
+  const generatePetPrompt = (type: string, color: string, accessories?: string) => {
+    const basePrompts: { [key: string]: string } = {
       konijn: "cute fluffy baby bunny rabbit, adorable kawaii style, soft fur, big round eyes, sitting pose, pastel colors, studio lighting, white background, high quality, detailed",
       kat: "adorable baby kitten, fluffy fur, big round eyes, kawaii style, cute sitting pose, soft lighting, white background, high quality, detailed",
       hond: "cute puppy dog, fluffy soft fur, big round eyes, adorable kawaii style, sitting pose, pastel colors, white background, high quality, detailed",
@@ -61,15 +60,20 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
       vis: "cute cartoon fish, big round eyes, adorable kawaii style, colorful scales, swimming pose, white background, high quality, detailed",
       schildpad: "cute baby turtle, adorable shell, big round eyes, kawaii style, sitting pose, pastel colors, white background, high quality, detailed"
     };
-    return prompts[type] || "cute adorable baby animal, kawaii style, big round eyes, soft fur, white background, high quality, detailed";
+    
+    let prompt = basePrompts[type] || "cute adorable baby animal, kawaii style, big round eyes, soft fur, white background, high quality, detailed";
+    
+    if (accessories) {
+      prompt += `, ${accessories}`;
+    }
+    
+    return prompt;
   };
 
   const generatePetImage = async () => {
-    if (!runwareService) return;
-    
     setIsGenerating(true);
     try {
-      const prompt = generatePetPrompt(pet.type, pet.color);
+      const prompt = generatePetPrompt(pet.type, pet.color, pet.accessories);
       const result = await runwareService.generateImage({
         positivePrompt: prompt,
         model: "runware:100@1",
@@ -88,43 +92,31 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
     }
   };
 
-  const handleApiKeySubmit = (key: string) => {
-    setApiKey(key);
-    const service = new RunwareService(key);
-    setRunwareService(service);
-  };
-
   useEffect(() => {
-    if (runwareService && !petImage && !isGenerating) {
-      generatePetImage();
-    }
-  }, [runwareService, petImage, pet.type, pet.color]);
-
-  if (!apiKey) {
-    return <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />;
-  }
+    generatePetImage();
+  }, [pet.type, pet.color, pet.accessories]);
 
   return (
-    <Card className="bg-theme-white border-2 border-theme-green/50 hover:border-theme-green transition-all duration-300">
+    <Card className="bg-theme-white border-4 hover:border-theme-green transition-all duration-300" style={{ borderColor: pet.color }}>
       <CardContent className="p-6 text-center">
         {/* Pet Avatar */}
         <div 
-          className={`${sizeClasses[size]} mx-auto mb-4 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden ${
-            isAnimating ? 'animate-grow' : 'hover:scale-110'
+          className={`${sizeClasses[size]} mx-auto mb-4 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden border-4 ${
+            isAnimating ? 'animate-grow' : 'hover:scale-105'
           }`}
-          style={{ backgroundColor: pet.color }}
+          style={{ backgroundColor: pet.color, borderColor: pet.color }}
           onClick={handlePetClick}
         >
           {isGenerating ? (
-            <div className="text-2xl animate-pulse">⏳</div>
+            <div className="text-4xl animate-pulse">⏳</div>
           ) : petImage ? (
             <img 
               src={petImage} 
               alt={`${pet.name} de ${pet.type}`}
-              className="w-full h-full object-cover rounded-full"
+              className="w-full h-full object-cover rounded-xl"
             />
           ) : (
-            <span className="text-4xl" style={{ fontSize: size === 'large' ? '4rem' : size === 'medium' ? '2rem' : '1rem' }}>
+            <span className="text-6xl">
               {getEmoji(pet.type)}
             </span>
           )}

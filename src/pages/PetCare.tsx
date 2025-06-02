@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Heart, Utensils, Gamepad2, Shirt, Edit3 } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Heart, Utensils, Gamepad2, Shirt, Edit3, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import PetDisplay from "@/components/PetDisplay";
 import { useToast } from "@/hooks/use-toast";
@@ -17,11 +18,13 @@ const PetCare = () => {
     happiness: 85,
     hunger: 60,
     level: 3,
-    color: "#95cec0"
+    color: "#95cec0",
+    accessories: ""
   });
   
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(currentPet.name);
+  const [newAccessories, setNewAccessories] = useState("");
 
   const feedPet = () => {
     if (currentPet.hunger > 10) {
@@ -72,6 +75,30 @@ const PetCare = () => {
     } else {
       setIsEditing(false);
     }
+  };
+
+  const addAccessories = () => {
+    if (newAccessories.trim()) {
+      setCurrentPet(prev => ({ 
+        ...prev, 
+        accessories: prev.accessories 
+          ? `${prev.accessories}, ${newAccessories.trim()}`
+          : newAccessories.trim()
+      }));
+      setNewAccessories("");
+      toast({
+        title: "Accessoires toegevoegd! ✨",
+        description: `${currentPet.name} heeft nu ${newAccessories.trim()}!`,
+      });
+    }
+  };
+
+  const clearAccessories = () => {
+    setCurrentPet(prev => ({ ...prev, accessories: "" }));
+    toast({
+      title: "Accessoires weggehaald! 🧹",
+      description: `${currentPet.name} is weer helemaal natuurlijk!`,
+    });
   };
 
   const changeColor = (color: string) => {
@@ -201,8 +228,61 @@ const PetCare = () => {
               </Card>
             </div>
 
-            {/* Customization */}
+            {/* Pet Accessories */}
             <Card className="bg-theme-purple/10 border-theme-purple">
+              <CardHeader>
+                <CardTitle className="font-heebo-black text-theme-dark flex items-center">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Accessoires toevoegen
+                </CardTitle>
+                <CardDescription>
+                  Voeg leuke accessoires toe aan je diertje (bijv. hoed, wortel, zonnebril)
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {currentPet.accessories && (
+                    <div className="p-3 bg-theme-white rounded-lg border border-theme-purple/20">
+                      <p className="text-sm text-theme-dark/70 mb-2">Huidige accessoires:</p>
+                      <p className="text-theme-dark font-medium">{currentPet.accessories}</p>
+                    </div>
+                  )}
+                  <div className="space-y-3">
+                    <Label htmlFor="accessories">Nieuwe accessoires</Label>
+                    <Textarea
+                      id="accessories"
+                      value={newAccessories}
+                      onChange={(e) => setNewAccessories(e.target.value)}
+                      placeholder="Beschrijf wat je wilt toevoegen (bijv. 'een rode hoed en een wortel')"
+                      className="border-theme-purple/50 focus:border-theme-purple"
+                      rows={3}
+                    />
+                    <div className="flex space-x-2">
+                      <Button 
+                        onClick={addAccessories}
+                        className="bg-theme-purple hover:bg-theme-purple/80 text-theme-white flex-1"
+                        disabled={!newAccessories.trim()}
+                      >
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Toevoegen
+                      </Button>
+                      {currentPet.accessories && (
+                        <Button 
+                          onClick={clearAccessories}
+                          variant="outline"
+                          className="border-theme-purple text-theme-purple hover:bg-theme-purple/10"
+                        >
+                          Wissen
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Customization */}
+            <Card className="bg-theme-green/10 border-theme-green">
               <CardHeader>
                 <CardTitle className="font-heebo-black text-theme-dark flex items-center">
                   <Shirt className="w-5 h-5 mr-2" />
@@ -232,7 +312,7 @@ const PetCare = () => {
             </Card>
 
             {/* Tips */}
-            <Card className="bg-theme-green/10 border-theme-green">
+            <Card className="bg-theme-yellow/10 border-theme-yellow">
               <CardHeader>
                 <CardTitle className="font-heebo-black text-theme-dark flex items-center">
                   <Heart className="w-5 h-5 mr-2" />
@@ -254,8 +334,8 @@ const PetCare = () => {
                     Speel spelletjes voor extra bonding tijd
                   </li>
                   <li className="flex items-start">
-                    <span className="text-theme-purple mr-2">🎨</span>
-                    Pas de uitstraling aan naar jouw smaak
+                    <span className="text-theme-purple mr-2">✨</span>
+                    Voeg accessoires toe om je diertje uniek te maken
                   </li>
                 </ul>
               </CardContent>
