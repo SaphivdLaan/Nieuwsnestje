@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Nieuwsnestje
 
-## Project info
+**Nieuwsnestje** is een educatief platform ontworpen voor kinderen van 6 tot 8 jaar, waarmee zij spelenderwijs het nieuws leren begrijpen. Kinderen krijgen klassikaal het nieuws uitgelegd door een schattig diertje dat elke week groeit op basis van hun interactie. Door kleine quizjes, gesprekken en zorgmomentjes bouwen kinderen een band op met hun digitale ‘nieuwsvriendje’ en krijgen ze spelenderwijs meer grip op wat er speelt in de wereld.
 
-**URL**: https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41
+Bekijk de live demo hier: [nieuws-vriendjes-groeien-samen.lovable.app](https://nieuws-vriendjes-groeien-samen.lovable.app/)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Doelgroep
 
-**Use Lovable**
+- Kinderen van 6 t/m 8 jaar
+- Primair onderwijs (onderbouw)
+- Leerkrachten die nieuwsbespreking willen integreren zonder extra werkdruk
+- Ouders die hun kind op een veilige manier willen laten kennismaken met nieuws
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Doel van het project
 
-**Use your preferred IDE**
+Kinderen krijgen vaak weinig mee van het nieuws, of raken verward door heftige gebeurtenissen. Het doel van dit platform is:
+- Een kindvriendelijke manier bieden om nieuws te verwerken
+- De drempel verlagen voor leerkrachten om nieuws in de klas te bespreken
+- Spel, emotionele veiligheid en educatie combineren
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Belangrijkste functionaliteiten
 
-Follow these steps:
+- **Wekelijkse pakketten:** Elke week wordt een nieuw thema of actueel onderwerp behandeld.
+- **Interactieve diertjes:** Klassen ontvangen een diertje dat hen het nieuws uitlegt. Door het beantwoorden van vragen groeit het diertje.
+- **Personalisatie:** De klas kan hun diertje een naam geven, kleding aanpassen en er extra goed voor zorgen.
+- **Zorgpagina:** Kinderen kunnen hun diertje voeren, spelen en verzorgen – dit versterkt de emotionele band.
+- **Themakeuze voor leraren:** Leraren kunnen vooraf een thema kiezen (actueel of educatief) dat past bij hun lesprogramma.
+- **Overzichtspagina:** Een visueel archief van alle diertjes die de klas tot nu toe heeft verzameld.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Technologie & Tools
 
-# Step 3: Install the necessary dependencies.
-npm i
+- Frontend: React (met TailwindCSS)
+- Backend/API: Node.js
+- AI-module: Afbeeldingen worden gegenereerd door Runware.
+- Deployment: Lovable App Hosting
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## Mogelijke uitbreidingen
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Multiplayer/klasfunctie: samenwerken met klasgenoten aan puzzels en spelletjes
+- Ouderkoppeling voor thuisverwerking
+- Meer spelvormen: puzzels, nieuwsstripjes, rollenspellen
+- Tekst-naar-spraak voor jonge lezers
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Privacy & Veiligheid
 
-## What technologies are used for this project?
+Nieuwsnestje is ontworpen met aandacht voor kindveiligheid:
+- Geen in-app aankopen
+- Geen advertenties
+- Geen persoonlijke gegevens nodig van kinderen
+- Geen sociale interactie met vreemden
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Projectstructuur
 
-## How can I deploy this project?
+/src
+/components -> Alle UI-componenten zoals diertjes, spelmodules
+/pages -> Overzichtspagina’s en themapagina’s
+/data -> Thema’s en content
+/assets -> Illustraties, iconen, diertjes
 
-Simply open [Lovable](https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## Team
 
-Yes, you can!
+- 3 Journalistiek studenten
+- 2 ICT & Media Design studenten
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Licentie
+
+Dit project is ontwikkeld in het kader van een onderwijsproject en valt onder een CC BY-NC 4.0 licentie. Vrij te gebruiken voor educatieve doeleinden, met naamsvermelding. Niet commercieel.
