@@ -1,11 +1,14 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Heart, Newspaper, Gift, PawPrint } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import PetDisplay from "@/components/PetDisplay";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentPet] = useState({
     name: "Olijfje",
     type: "konijn",
@@ -15,134 +18,114 @@ const Index = () => {
     color: "#95cec0"
   });
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-
-  const newsStory = "Hallo! Ik ben Olijfje en ik heb een interessant verhaal voor je. Wist je dat konijnen in de winter een extra dikke vacht krijgen om warm te blijven? Hun vacht wordt wel 25% dikker! Ook graven ze diepe holen in de grond waar het warmer is dan buiten.";
-
-  const quizQuestions = [
-    {
-      question: "Hoeveel dikker wordt de vacht van konijnen in de winter?",
-      answers: ["15%", "25%", "35%", "45%"],
-      correct: 1
-    },
-    {
-      question: "Waarom graven konijnen holen in de winter?",
-      answers: ["Om voedsel te verstoppen", "Om warm te blijven", "Om te spelen", "Om andere dieren te verstoppen"],
-      correct: 1
-    },
-    {
-      question: "Wat gebeurt er met konijnenvacht in de winter?",
-      answers: ["Wordt dunner", "Valt uit", "Wordt dikker", "Verandert van kleur"],
-      correct: 2
-    }
-  ];
-
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    setSelectedAnswer(answerIndex);
-  };
-
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null);
-    } else {
-      // Quiz completed
-      setCurrentQuestionIndex(0);
-      setSelectedAnswer(null);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-theme-yellow/30 pb-20">
-      {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          
-          {/* Left Side - Pet with News */}
-          <div className="space-y-8">
-            {/* News Story */}
-            <div className="bg-theme-orange p-8 rounded-3xl">
-              <h2 className="font-heebo-black text-2xl text-theme-white mb-4 text-center">
-                📰 Nieuws van {currentPet.name}
-              </h2>
-              <p className="text-theme-white text-lg leading-relaxed font-medium">
-                {newsStory}
-              </p>
-            </div>
-
-            {/* Pet Display */}
-            <div className="flex justify-center">
-              <div className="bg-theme-green p-8 rounded-full">
-                <PetDisplay pet={currentPet} showStats={false} />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - Quiz */}
-          <div className="space-y-6">
-            <div className="bg-theme-purple p-8 rounded-3xl">
-              <div className="mb-6">
-                <h2 className="font-heebo-black text-theme-white text-2xl mb-2">
-                  🧠 Quiz Vraag {currentQuestionIndex + 1}/{quizQuestions.length}
-                </h2>
-                <p className="text-theme-white text-xl font-medium">
-                  {currentQuestion.question}
-                </p>
-              </div>
-              
-              <div className="space-y-4">
-                {currentQuestion.answers.map((answer, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    className={`w-full text-left justify-start p-6 h-auto text-wrap text-lg font-medium rounded-2xl transition-all duration-300 ${
-                      selectedAnswer === index 
-                        ? index === currentQuestion.correct
-                          ? 'bg-theme-green text-theme-white'
-                          : 'bg-red-500 text-white'
-                        : selectedAnswer !== null && index === currentQuestion.correct
-                          ? 'bg-theme-green text-theme-white'
-                          : 'bg-theme-white text-theme-dark hover:bg-theme-yellow'
-                    }`}
-                    onClick={() => handleAnswerSelect(index)}
-                    disabled={selectedAnswer !== null}
-                  >
-                    <span className="text-base font-semibold">{answer}</span>
-                  </Button>
-                ))}
-                
-                {selectedAnswer !== null && (
-                  <div className="pt-6">
-                    <Button 
-                      onClick={handleNextQuestion}
-                      className="w-full bg-theme-orange hover:bg-theme-yellow text-theme-white font-bold text-lg py-4 rounded-2xl transform hover:scale-105 transition-all duration-300"
-                    >
-                      {currentQuestionIndex < quizQuestions.length - 1 ? '🚀 Volgende Vraag' : '🔄 Quiz Opnieuw'}
-                      <ChevronRight className="w-5 h-5 ml-2" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {selectedAnswer !== null && (
-              <div className="bg-theme-yellow p-6 rounded-2xl">
-                <p className="text-theme-white text-lg font-bold text-center">
-                  {selectedAnswer === currentQuestion.correct 
-                    ? "🎉 Fantastisch! Je antwoord is helemaal goed!" 
-                    : "❌ Oops! Dat is niet juist. Probeer het nog eens!"}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Navigation */}
+    <div className="min-h-screen bg-gradient-to-br from-theme-purple/20 via-theme-white to-theme-green/20">
       <Navigation />
+      
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h1 className="font-heebo-black font-black text-6xl text-theme-dark mb-4">
+            Nieuws nestje
+          </h1>
+          <p className="text-xl text-theme-dark/70 max-w-2xl mx-auto">
+            Leer over de wereld door voor je eigen virtuele diertje te zorgen! 
+            Beantwoord vragen over het nieuws en zie je diertje groeien.
+          </p>
+        </div>
+
+        {/* Current Pet Display */}
+        <div className="max-w-md mx-auto mb-12">
+          <PetDisplay pet={currentPet} showStats={true} />
+        </div>
+
+        {/* Main Actions */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+          <Card 
+            className="bg-theme-yellow/20 border-theme-yellow hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+            onClick={() => navigate('/news')}
+          >
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-theme-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <Newspaper className="w-8 h-8 text-theme-white" />
+              </div>
+              <CardTitle className="font-heebo-black text-theme-dark">Nieuws Lezen</CardTitle>
+              <CardDescription>
+                Ontdek interessante verhalen en help je diertje groeien
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card 
+            className="bg-theme-green/20 border-theme-green hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+            onClick={() => navigate('/pet-care')}
+          >
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-theme-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-8 h-8 text-theme-white" />
+              </div>
+              <CardTitle className="font-heebo-black text-theme-dark">Diertje Verzorgen</CardTitle>
+              <CardDescription>
+                Voer je diertje, speel ermee en bouw een hechte band op
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card 
+            className="bg-theme-orange/20 border-theme-orange hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+            onClick={() => navigate('/collection')}
+          >
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-theme-orange rounded-full flex items-center justify-center mx-auto mb-4">
+                <PawPrint className="w-8 h-8 text-theme-white" />
+              </div>
+              <CardTitle className="font-heebo-black text-theme-dark">Mijn Collectie</CardTitle>
+              <CardDescription>
+                Bekijk alle diertjes die je hebt verzameld
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="bg-theme-purple/20 border-theme-purple hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer">
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-theme-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <Gift className="w-8 h-8 text-theme-white" />
+              </div>
+              <CardTitle className="font-heebo-black text-theme-dark">Nieuw Pakketje</CardTitle>
+              <CardDescription>
+                Open je wekelijkse verrassing en ontdek een nieuw diertje
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+
+        {/* Weekly Progress */}
+        <Card className="max-w-2xl mx-auto bg-theme-white/80 border-2 border-theme-yellow">
+          <CardHeader>
+            <CardTitle className="font-heebo-black text-center text-theme-dark">
+              Deze Week: Dieren in de Winter ❄️
+            </CardTitle>
+            <CardDescription className="text-center">
+              Leer hoe dieren zich voorbereiden op de koude maanden
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-theme-dark font-semibold">Voortgang deze week</span>
+              <span className="text-theme-dark font-bold">3/5 verhalen</span>
+            </div>
+            <div className="w-full bg-theme-purple/20 rounded-full h-4">
+              <div 
+                className="bg-gradient-to-r from-theme-yellow to-theme-orange h-4 rounded-full transition-all duration-500" 
+                style={{ width: '60%' }}
+              ></div>
+            </div>
+            <p className="text-sm text-theme-dark/70 mt-2 text-center">
+              Nog 2 verhalen en Olijfje wordt groter! 🐰
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
