@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Utensils } from "lucide-react";
 import { RunwareService } from "@/services/RunwareService";
 
 interface Pet {
@@ -127,43 +126,6 @@ const PetDisplay = ({ pet, showStats = false, size = 'medium' }: PetDisplayProps
           {pet.name}
         </h3>
         <p className="text-theme-dark/70 mb-4">Level {pet.level}</p>
-
-        {/* Stats */}
-        {showStats && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Heart className="w-4 h-4 text-red-500" />
-                <span className="text-sm text-theme-dark">Geluk</span>
-              </div>
-              <div className="flex-1 mx-2">
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-red-400 to-red-500 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${pet.happiness}%` }}
-                  ></div>
-                </div>
-              </div>
-              <span className="text-sm font-semibold text-theme-dark">{pet.happiness}%</span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Utensils className="w-4 h-4 text-theme-orange" />
-                <span className="text-sm text-theme-dark">Honger</span>
-              </div>
-              <div className="flex-1 mx-2">
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-theme-orange to-theme-yellow h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${100 - pet.hunger}%` }}
-                  ></div>
-                </div>
-              </div>
-              <span className="text-sm font-semibold text-theme-dark">{100 - pet.hunger}%</span>
-            </div>
-          </div>
-        )}
       </CardContent>
     </Card>
   );

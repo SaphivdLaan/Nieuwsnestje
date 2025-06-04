@@ -1,218 +1,196 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Trophy, BookOpen } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import Navigation from "@/components/Navigation";
+import PetDisplay from "@/components/PetDisplay";
 import { useToast } from "@/hooks/use-toast";
 
 const NewsCenter = () => {
   const { toast } = useToast();
-  const [readArticles, setReadArticles] = useState<number[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: string}>({});
+  const [showResults, setShowResults] = useState(false);
 
-  const newsArticles = [
+  const currentPet = {
+    name: "Olijfje",
+    type: "konijn",
+    happiness: 85,
+    hunger: 60,
+    level: 3,
+    color: "#95cec0"
+  };
+
+  const newsStory = `Hallo! Ik ben Olijfje en ik heb een spannend verhaal voor je! 🐰
+
+  Vandaag ontdekte ik iets heel interessants over ijsberen. Wist je dat ijsberen eigenlijk niet wit zijn? Hun vacht is doorzichtig! Elke haar is hol van binnen, net als een klein buisje. Dit helpt hen om warm te blijven in de ijskoude Arctis.
+
+  Maar er is meer! Ijsberen hebben ook een zwarte huid onder hun vacht. Dit helpt hen om de warmte van de zon beter op te nemen. Hun neus, pootjes en tong zijn ook zwart!
+
+  En het allerleukste? Baby ijsberen zijn zo klein als een hamster wanneer ze geboren worden. Hun mama zorgt heel goed voor hen in een sneeuwgrot tot ze groot genoeg zijn om naar buiten te gaan.`;
+
+  const quizQuestions = [
     {
       id: 1,
-      title: "Ijsberen bereiden zich voor op de winter",
-      description: "Ontdek hoe ijsberen hun dikke vacht krijgen voor de koude maanden.",
-      readTime: "3 min",
-      reward: "+10 XP",
-      category: "Dieren in de Winter",
-      difficulty: "Makkelijk",
-      isCompleted: true,
-      image: "🐻‍❄️"
+      question: "Welke kleur hebben de haren van ijsberen echt?",
+      options: ["Wit", "Doorzichtig", "Zwart", "Geel"],
+      correct: "Doorzichtig"
     },
     {
       id: 2,
-      title: "Waarom trekken vogels naar het zuiden?",
-      description: "Een fascinerende reis door de wereld van trekvogels en hun lange reizen.",
-      readTime: "4 min",
-      reward: "+15 XP",
-      category: "Dieren in de Winter",
-      difficulty: "Gemiddeld",
-      isCompleted: true,
-      image: "🦅"
+      question: "Waarom hebben ijsberen een zwarte huid?",
+      options: [
+        "Om er eng uit te zien",
+        "Om warmte van de zon op te nemen", 
+        "Om zich te verstoppen",
+        "Dat is toeval"
+      ],
+      correct: "Om warmte van de zon op te nemen"
     },
     {
       id: 3,
-      title: "Hoe houden eekhoorns hun noten warm?",
-      description: "De slimme trucjes van eekhoorns om de winter door te komen.",
-      readTime: "2 min",
-      reward: "+8 XP",
-      category: "Dieren in de Winter",
-      difficulty: "Makkelijk",
-      isCompleted: true,
-      image: "🐿️"
+      question: "Hoe groot zijn baby ijsberen bij de geboorte?",
+      options: [
+        "Zo groot als een hond",
+        "Zo groot als een kat", 
+        "Zo groot als een hamster",
+        "Zo groot als een konijn"
+      ],
+      correct: "Zo groot als een hamster"
     },
     {
       id: 4,
-      title: "Winterslapen: Welke dieren doen het?",
-      description: "Van beren tot egels - ontdek welke dieren de hele winter slapen.",
-      readTime: "5 min",
-      reward: "+20 XP",
-      category: "Dieren in de Winter",
-      difficulty: "Moeilijk",
-      isCompleted: false,
-      image: "🦔"
-    },
-    {
-      id: 5,
-      title: "Pinguïns: Experts in koude overleving",
-      description: "Leer over de bijzondere aanpassingen van pinguïns voor het extreme koude.",
-      readTime: "4 min",
-      reward: "+15 XP",
-      category: "Dieren in de Winter",
-      difficulty: "Gemiddeld",
-      isCompleted: false,
-      image: "🐧"
+      question: "Waar zorgt mama ijsbeer voor haar baby's?",
+      options: [
+        "In een boom",
+        "In een sneeuwgrot",
+        "Op het ijs",
+        "In het water"
+      ],
+      correct: "In een sneeuwgrot"
     }
   ];
 
-  const handleReadArticle = (articleId: number) => {
-    if (!readArticles.includes(articleId)) {
-      setReadArticles([...readArticles, articleId]);
-      toast({
-        title: "Artikel voltooid! 🎉",
-        description: "Je diertje is blij met je nieuwe kennis!",
-      });
-    }
+  const handleAnswerChange = (questionId: number, answer: string) => {
+    setSelectedAnswers(prev => ({
+      ...prev,
+      [questionId]: answer
+    }));
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Makkelijk": return "bg-theme-green text-theme-white";
-      case "Gemiddeld": return "bg-theme-yellow text-theme-white";
-      case "Moeilijk": return "bg-theme-orange text-theme-white";
-      default: return "bg-gray-500 text-white";
-    }
+  const handleSubmitQuiz = () => {
+    const correctAnswers = quizQuestions.filter(q => 
+      selectedAnswers[q.id] === q.correct
+    ).length;
+    
+    setShowResults(true);
+    
+    toast({
+      title: `Quiz voltooid! 🎉`,
+      description: `Je hebt ${correctAnswers} van de ${quizQuestions.length} vragen goed beantwoord!`,
+    });
   };
+
+  const allQuestionsAnswered = quizQuestions.every(q => selectedAnswers[q.id]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-theme-purple/20 via-theme-white to-theme-green/20">
-      <Navigation />
-      
+    <div className="min-h-screen bg-gradient-to-br from-theme-purple/20 via-theme-white to-theme-green/20 pb-20">
       <div className="container mx-auto px-4 py-8">
+        {/* Page Title */}
         <div className="text-center mb-8">
           <h1 className="font-heebo-black font-black text-4xl text-theme-dark mb-4">
-            Nieuws Centrum 📰
+            Nieuws van Olijfje 📰
           </h1>
-          <p className="text-lg text-theme-dark/70 max-w-2xl mx-auto">
-            Lees interessante verhalen en help je diertje groeien door vragen te beantwoorden!
-          </p>
         </div>
 
-        {/* Week Theme */}
-        <Card className="max-w-2xl mx-auto mb-8 bg-gradient-to-r from-theme-yellow/20 to-theme-orange/20 border-2 border-theme-yellow">
-          <CardHeader className="text-center">
-            <CardTitle className="font-heebo-black text-2xl text-theme-dark">
-              Deze Week: Dieren in de Winter ❄️
-            </CardTitle>
-            <CardDescription>
-              Ontdek hoe dieren zich aanpassen aan de koude seizoenen
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-center items-center space-x-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-theme-dark">3</div>
-                <div className="text-sm text-theme-dark/70">Voltooid</div>
-              </div>
-              <div className="text-4xl">🏆</div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-theme-dark">2</div>
-                <div className="text-sm text-theme-dark/70">Te gaan</div>
-              </div>
+        {/* News Story */}
+        <Card className="max-w-4xl mx-auto mb-8 bg-theme-white/90">
+          <CardContent className="p-8">
+            <div className="text-lg text-theme-dark leading-relaxed whitespace-pre-line mb-8">
+              {newsStory}
+            </div>
+            
+            {/* Pet Display */}
+            <div className="max-w-md mx-auto">
+              <PetDisplay pet={currentPet} showStats={false} />
             </div>
           </CardContent>
         </Card>
 
-        {/* News Articles Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {newsArticles.map((article) => (
-            <Card 
-              key={article.id}
-              className={`hover:shadow-lg transition-all duration-300 hover:scale-105 ${
-                article.isCompleted 
-                  ? 'bg-theme-green/10 border-theme-green' 
-                  : 'bg-theme-white border-gray-200'
-              }`}
-            >
-              <CardHeader>
-                <div className="flex justify-between items-start mb-2">
-                  <div className="text-4xl">{article.image}</div>
-                  {article.isCompleted && (
-                    <Badge className="bg-theme-green text-theme-white">
-                      <Trophy className="w-3 h-3 mr-1" />
-                      Voltooid
-                    </Badge>
-                  )}
-                </div>
-                <CardTitle className="font-heebo-black text-lg text-theme-dark">
-                  {article.title}
-                </CardTitle>
-                <CardDescription className="text-theme-dark/70">
-                  {article.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {article.readTime}
-                  </Badge>
-                  <Badge className={getDifficultyColor(article.difficulty)}>
-                    {article.difficulty}
-                  </Badge>
-                  <Badge variant="outline" className="text-theme-orange border-theme-orange">
-                    {article.reward}
-                  </Badge>
-                </div>
-                
-                <Button 
-                  className={`w-full ${
-                    article.isCompleted 
-                      ? 'bg-theme-green hover:bg-theme-green/80' 
-                      : 'bg-theme-yellow hover:bg-theme-yellow/80'
-                  } text-theme-white font-semibold`}
-                  onClick={() => handleReadArticle(article.id)}
-                  disabled={readArticles.includes(article.id)}
-                >
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  {article.isCompleted ? 'Bekijk opnieuw' : 'Start lezen'}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Progress Summary */}
-        <Card className="max-w-md mx-auto mt-8 bg-theme-white/80">
-          <CardHeader className="text-center">
-            <CardTitle className="font-heebo-black text-theme-dark">
-              Jouw Voortgang
+        {/* Quiz Section */}
+        <Card className="max-w-4xl mx-auto bg-theme-white/90">
+          <CardHeader>
+            <CardTitle className="font-heebo-black text-2xl text-theme-dark text-center">
+              Test je kennis! 🧠
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-theme-dark">Deze week gelezen:</span>
-                <span className="font-bold text-theme-dark">3/5</span>
-              </div>
-              <div className="w-full bg-theme-purple/20 rounded-full h-3">
-                <div 
-                  className="bg-gradient-to-r from-theme-yellow to-theme-orange h-3 rounded-full transition-all duration-500" 
-                  style={{ width: '60%' }}
-                ></div>
-              </div>
-              <p className="text-center text-sm text-theme-dark/70">
-                Nog 2 artikelen en je diertje wordt level 4! 🎯
-              </p>
+          <CardContent className="p-8">
+            <div className="space-y-8">
+              {quizQuestions.map((question) => (
+                <div key={question.id} className="space-y-4">
+                  <h3 className="font-bold text-lg text-theme-dark">
+                    {question.id}. {question.question}
+                  </h3>
+                  
+                  <RadioGroup
+                    value={selectedAnswers[question.id] || ""}
+                    onValueChange={(value) => handleAnswerChange(question.id, value)}
+                  >
+                    {question.options.map((option, index) => (
+                      <div key={index} className="flex items-center space-x-2">
+                        <RadioGroupItem 
+                          value={option} 
+                          id={`q${question.id}-${index}`}
+                          className={showResults ? (
+                            option === question.correct 
+                              ? "border-green-500 text-green-500" 
+                              : selectedAnswers[question.id] === option && option !== question.correct
+                                ? "border-red-500 text-red-500"
+                                : ""
+                          ) : ""}
+                        />
+                        <Label 
+                          htmlFor={`q${question.id}-${index}`}
+                          className={`cursor-pointer ${showResults ? (
+                            option === question.correct 
+                              ? "text-green-600 font-semibold" 
+                              : selectedAnswers[question.id] === option && option !== question.correct
+                                ? "text-red-600"
+                                : "text-theme-dark"
+                          ) : "text-theme-dark"}`}
+                        >
+                          {option}
+                        </Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              ))}
+              
+              {!showResults && (
+                <Button
+                  onClick={handleSubmitQuiz}
+                  disabled={!allQuestionsAnswered}
+                  className="w-full bg-theme-green hover:bg-theme-green/80 text-theme-white font-semibold text-lg py-3"
+                >
+                  Controleer Antwoorden
+                </Button>
+              )}
+              
+              {showResults && (
+                <div className="text-center p-6 bg-theme-green/10 rounded-lg">
+                  <p className="text-lg text-theme-dark">
+                    Goed gedaan! 🎉 Olijfje is trots op je!
+                  </p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
       </div>
+
+      <Navigation />
     </div>
   );
 };
