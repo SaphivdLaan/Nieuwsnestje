@@ -56,7 +56,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-theme-yellow/30 via-theme-green/20 to-theme-purple/30 pb-20">
+    <div className="min-h-screen bg-theme-yellow/30 pb-20">
       {/* Main Content */}
       <div className="container mx-auto px-6 py-8">
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -64,7 +64,7 @@ const Index = () => {
           {/* Left Side - Pet with News */}
           <div className="space-y-8">
             {/* News Story */}
-            <div className="bg-gradient-to-r from-theme-yellow to-theme-orange p-8 rounded-3xl shadow-2xl border-4 border-theme-white">
+            <div className="bg-theme-orange p-8 rounded-3xl">
               <h2 className="font-heebo-black text-2xl text-theme-white mb-4 text-center">
                 📰 Nieuws van {currentPet.name}
               </h2>
@@ -75,7 +75,7 @@ const Index = () => {
 
             {/* Pet Display */}
             <div className="flex justify-center">
-              <div className="bg-gradient-to-br from-theme-green to-theme-purple p-8 rounded-full shadow-2xl border-4 border-theme-yellow">
+              <div className="bg-theme-green p-8 rounded-full">
                 <PetDisplay pet={currentPet} showStats={false} />
               </div>
             </div>
@@ -83,7 +83,7 @@ const Index = () => {
 
           {/* Right Side - Quiz */}
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-theme-purple to-theme-green p-8 rounded-3xl shadow-2xl border-4 border-theme-orange">
+            <div className="bg-theme-purple p-8 rounded-3xl">
               <div className="mb-6">
                 <h2 className="font-heebo-black text-theme-white text-2xl mb-2">
                   🧠 Quiz Vraag {currentQuestionIndex + 1}/{quizQuestions.length}
@@ -98,14 +98,14 @@ const Index = () => {
                   <Button
                     key={index}
                     variant="outline"
-                    className={`w-full text-left justify-start p-6 h-auto text-wrap text-lg font-medium rounded-2xl border-3 transition-all duration-300 ${
+                    className={`w-full text-left justify-start p-6 h-auto text-wrap text-lg font-medium rounded-2xl transition-all duration-300 ${
                       selectedAnswer === index 
                         ? index === currentQuestion.correct
-                          ? 'bg-theme-green text-theme-white border-theme-white shadow-lg scale-105'
-                          : 'bg-red-500 text-white border-theme-white shadow-lg scale-105'
+                          ? 'bg-theme-green text-theme-white'
+                          : 'bg-red-500 text-white'
                         : selectedAnswer !== null && index === currentQuestion.correct
-                          ? 'bg-theme-green text-theme-white border-theme-white shadow-lg scale-105'
-                          : 'bg-theme-white text-theme-dark border-theme-yellow hover:bg-theme-yellow hover:scale-105 shadow-md'
+                          ? 'bg-theme-green text-theme-white'
+                          : 'bg-theme-white text-theme-dark hover:bg-theme-yellow'
                     }`}
                     onClick={() => handleAnswerSelect(index)}
                     disabled={selectedAnswer !== null}
@@ -118,7 +118,7 @@ const Index = () => {
                   <div className="pt-6">
                     <Button 
                       onClick={handleNextQuestion}
-                      className="w-full bg-gradient-to-r from-theme-orange to-theme-yellow hover:from-theme-yellow hover:to-theme-orange text-theme-white font-bold text-lg py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300"
+                      className="w-full bg-theme-orange hover:bg-theme-yellow text-theme-white font-bold text-lg py-4 rounded-2xl transform hover:scale-105 transition-all duration-300"
                     >
                       {currentQuestionIndex < quizQuestions.length - 1 ? '🚀 Volgende Vraag' : '🔄 Quiz Opnieuw'}
                       <ChevronRight className="w-5 h-5 ml-2" />
@@ -129,11 +129,11 @@ const Index = () => {
             </div>
 
             {selectedAnswer !== null && (
-              <div className="bg-gradient-to-r from-theme-yellow to-theme-orange p-6 rounded-2xl shadow-lg border-4 border-theme-white">
+              <div className="bg-theme-yellow p-6 rounded-2xl">
                 <p className="text-theme-white text-lg font-bold text-center">
                   {selectedAnswer === currentQuestion.correct 
                     ? "🎉 Fantastisch! Je antwoord is helemaal goed!" 
-                    : "❌ Oeps! Dat is niet juist. Probeer het nog eens!"}
+                    : "❌ Oops! Dat is niet juist. Probeer het nog eens!"}
                 </p>
               </div>
             )}
