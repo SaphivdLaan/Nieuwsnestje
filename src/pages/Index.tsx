@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Newspaper, Gift, PawPrint } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import PetDisplay from "@/components/PetDisplay";
@@ -19,9 +18,7 @@ const Index = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-theme-purple/20 via-theme-white to-theme-green/20">
-      <Navigation />
-      
+    <div className="min-h-screen bg-white pb-20">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
@@ -41,91 +38,58 @@ const Index = () => {
 
         {/* Main Actions */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
-          <Card 
-            className="bg-theme-yellow/20 border-theme-yellow hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+          <div 
+            className="bg-theme-yellow p-8 rounded-3xl hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer text-center"
             onClick={() => navigate('/news')}
           >
-            <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-theme-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <Newspaper className="w-8 h-8 text-theme-white" />
-              </div>
-              <CardTitle className="font-heebo-black text-theme-dark">Nieuws Lezen</CardTitle>
-              <CardDescription>
-                Ontdek interessante verhalen en help je diertje groeien
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <div className="w-16 h-16 bg-theme-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Newspaper className="w-8 h-8 text-theme-yellow" />
+            </div>
+            <h3 className="font-heebo-black text-theme-white text-xl mb-2">Nieuws Lezen</h3>
+            <p className="text-theme-white/90 text-sm">
+              Ontdek interessante verhalen en help je diertje groeien
+            </p>
+          </div>
 
-          <Card 
-            className="bg-theme-green/20 border-theme-green hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+          <div 
+            className="bg-theme-green p-8 rounded-3xl hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer text-center"
             onClick={() => navigate('/pet-care')}
           >
-            <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-theme-green rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-theme-white" />
-              </div>
-              <CardTitle className="font-heebo-black text-theme-dark">Diertje Verzorgen</CardTitle>
-              <CardDescription>
-                Voer je diertje, speel ermee en bouw een hechte band op
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <div className="w-16 h-16 bg-theme-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-8 h-8 text-theme-green" />
+            </div>
+            <h3 className="font-heebo-black text-theme-white text-xl mb-2">Diertje Verzorgen</h3>
+            <p className="text-theme-white/90 text-sm">
+              Voer je diertje, speel ermee en bouw een hechte band op
+            </p>
+          </div>
 
-          <Card 
-            className="bg-theme-orange/20 border-theme-orange hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+          <div 
+            className="bg-theme-orange p-8 rounded-3xl hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer text-center"
             onClick={() => navigate('/collection')}
           >
-            <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-theme-orange rounded-full flex items-center justify-center mx-auto mb-4">
-                <PawPrint className="w-8 h-8 text-theme-white" />
-              </div>
-              <CardTitle className="font-heebo-black text-theme-dark">Mijn Collectie</CardTitle>
-              <CardDescription>
-                Bekijk alle diertjes die je hebt verzameld
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-theme-purple/20 border-theme-purple hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer">
-            <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-theme-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                <Gift className="w-8 h-8 text-theme-white" />
-              </div>
-              <CardTitle className="font-heebo-black text-theme-dark">Nieuw Pakketje</CardTitle>
-              <CardDescription>
-                Open je wekelijkse verrassing en ontdek een nieuw diertje
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-
-        {/* Weekly Progress */}
-        <Card className="max-w-2xl mx-auto bg-theme-white/80 border-2 border-theme-yellow">
-          <CardHeader>
-            <CardTitle className="font-heebo-black text-center text-theme-dark">
-              Deze Week: Dieren in de Winter ❄️
-            </CardTitle>
-            <CardDescription className="text-center">
-              Leer hoe dieren zich voorbereiden op de koude maanden
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-theme-dark font-semibold">Voortgang deze week</span>
-              <span className="text-theme-dark font-bold">3/5 verhalen</span>
+            <div className="w-16 h-16 bg-theme-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <PawPrint className="w-8 h-8 text-theme-orange" />
             </div>
-            <div className="w-full bg-theme-purple/20 rounded-full h-4">
-              <div 
-                className="bg-gradient-to-r from-theme-yellow to-theme-orange h-4 rounded-full transition-all duration-500" 
-                style={{ width: '60%' }}
-              ></div>
-            </div>
-            <p className="text-sm text-theme-dark/70 mt-2 text-center">
-              Nog 2 verhalen en Olijfje wordt groter! 🐰
+            <h3 className="font-heebo-black text-theme-white text-xl mb-2">Mijn Collectie</h3>
+            <p className="text-theme-white/90 text-sm">
+              Bekijk alle diertjes die je hebt verzameld
             </p>
-          </CardContent>
-        </Card>
+          </div>
+
+          <div className="bg-theme-purple p-8 rounded-3xl hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer text-center">
+            <div className="w-16 h-16 bg-theme-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Gift className="w-8 h-8 text-theme-purple" />
+            </div>
+            <h3 className="font-heebo-black text-theme-white text-xl mb-2">Nieuw Pakketje</h3>
+            <p className="text-theme-white/90 text-sm">
+              Open je wekelijkse verrassing en ontdek een nieuw diertje
+            </p>
+          </div>
+        </div>
       </div>
+
+      <Navigation />
     </div>
   );
 };
