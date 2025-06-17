@@ -39,23 +39,36 @@ Tijdens dit project heb ik veel geleerd over:
 ## Projectstructuur
 
 nieuwsnestje/
-├── public/             # Statische bestanden
+├── public/                   # Statische bestanden (favicon, manifest, diertje-afbeeldingen)
+│
 ├── src/
-│   ├── components/     # UI-componenten zoals dier, quiz, menu
-│   ├── pages/          # Pagina’s zoals nieuwsoverzicht en profiel
-│   ├── assets/         # Afbeeldingen, iconen, AI-diervormen
-│   └── styles/         # Tailwind & globale CSS
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+│   ├── assets/              # Afbeeldingen, iconen, geluiden, fonts
+│   ├── components/          # Herbruikbare UI-componenten (Button, Card, Header, etc.)
+│   ├── features/            # Domeinspecifieke onderdelen
+│   │   ├── Diertje/         # Logica en UI voor verzorgbaar diertje
+│   │   ├── Nieuws/          # Nieuwsmodules: uitleg, quiz, themapagina’s
+│   │   └── Leeromgeving/    # Functionaliteit voor leerkrachten (filters, dashboard)
+│   ├── layouts/             # Paginalay-outs met navigatie, structuur, etc.
+│   ├── pages/               # Pagina’s gekoppeld aan routes (Home, Overzicht, Zorgpagina)
+│   ├── styles/              # Tailwind-configuratie en globale stijlen
+│   ├── lib/                 # Hulpfuncties, API-klanten, configuratie (bijv. Runway, AI)
+│   └── App.tsx             # Root component
+│
+├── .env                    # API keys en omgevingsvariabelen
+├── index.html             # Entry point van de app
+├── package.json           # Project metadata en dependencies
+├── tailwind.config.js     # Tailwind configuratie
+├── tsconfig.json          # TypeScript configuratie
+├── vite.config.ts         # Vite configuratie
+└── README.md              # Projectdocumentatie
+
 
 ## Lokale installatie
 
 Wil je zelf aan de slag met het project?
 
 ```bash
-git clone https://github.com/jouw-gebruikersnaam/nieuwsnestje.git
+git clone https://github.com/SaphivdLaan/nieuwsnestje.git
 cd nieuwsnestje
 npm install
 npm run dev
