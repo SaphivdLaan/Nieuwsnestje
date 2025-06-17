@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# Nieuwsnestje – Nieuws leren met je eigen diertje
 
-## Project info
+Een speels educatief platform voor kinderen van 6 tot 8 jaar waarin zij op een laagdrempelige manier kennismaken met het nieuws.
 
-**URL**: https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41
+## Over het project
 
-## How can I edit this code?
+Nieuwsnestje is ontworpen als klassikale web-app waarin kinderen elke week nieuws krijgen uitgelegd door een diertje dat met hen meegroeit. Door vragen en spelletjes te beantwoorden groeit het diertje gedurende de week. Elk kind kan het diertje personaliseren met een naam en kleding, en ervoor zorgen via een aparte speelomgeving.
 
-There are several ways of editing your application.
+Leerkrachten kiezen per week een thema of nieuwsitem (handmatig of via AI). Zo blijft het nieuwsaanbod actueel, passend bij de klas, én veilig voor jongere kinderen. Het platform is eenvoudig te gebruiken, interactief en gericht op taalontwikkeling, nieuwsgierigheid en betrokkenheid.
 
-**Use Lovable**
+Bekijk het live prototype: [https://nieuwsnestje.vercel.app/](https://nieuwsnestje.vercel.app/)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41) and start prompting.
+## Wat ik heb gebouwd
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Interactief nieuwsdiertje** – Elke week een nieuw karakter dat het nieuws uitlegt
+- **Spelenderwijs leren** – Kinderen beantwoorden quizvragen om hun diertje te laten groeien
+- **Personalisatie** – Naam geven, aankleden, verzorgen
+- **Leerkrachtfilters** – Thema’s en hoeveelheid content aanpasbaar
+- **Visueel rustige interface** – Ontwikkeld voor jonge lezers met weinig tekst en duidelijke iconen
 
-**Use your preferred IDE**
+## Technische stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **React + TypeScript** – Voor snelle en schaalbare ontwikkeling
+- **Tailwind CSS** – Voor moderne, toegankelijke styling
+- **shadcn/ui** – Voor herbruikbare UI-componenten
+- **Vite** – Voor een lichte en snelle ontwikkelomgeving
+- **Lovable** – Voor AI-gestuurde prototyping
+- **RunwayML API** – Voor het genereren van visuele diertjes
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Wat ik heb geleerd
 
-Follow these steps:
+Tijdens dit project heb ik veel geleerd over:
+- Ontwerpen voor een jonge doelgroep (6–8 jaar)
+- Werken met low-code/AI tools zoals Lovable
+- Aansturen van visuele generatie via prompts en API’s
+- Testen en itereren op basis van klaslokaalfeedback
+- Samenwerken met journalistieke studenten aan inhoud
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Projectstructuur
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+nieuwsnestje/
+├── public/             # Statische bestanden
+├── src/
+│   ├── components/     # UI-componenten zoals dier, quiz, menu
+│   ├── pages/          # Pagina’s zoals nieuwsoverzicht en profiel
+│   ├── assets/         # Afbeeldingen, iconen, AI-diervormen
+│   └── styles/         # Tailwind & globale CSS
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Lokale installatie
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Wil je zelf aan de slag met het project?
+
+```bash
+git clone https://github.com/jouw-gebruikersnaam/nieuwsnestje.git
+cd nieuwsnestje
+npm install
 npm run dev
-```
+````
 
-**Edit a file directly in GitHub**
+Ga dan naar [http://localhost:5173](http://localhost:5173) in je browser.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Deployment
 
-**Use GitHub Codespaces**
+Het project is gedeployed via Vercel. Iedere nieuwe versie is direct online zichtbaar. Custom domains kunnen gekoppeld worden via Project > Settings > Domains.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Toekomstplannen
 
-## What technologies are used for this project?
+* Nieuwssysteem verbeteren met meerdere moeilijkheidsniveaus
+* Koppeling met bestaande onderwijskundige thema’s
+* Rollen voor ouders en thuissituaties toevoegen
+* Grafische herontwerpen in samenwerking met Figma
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+**Gemaakt door: Saphi
+**Live versie:** [Bekijk de web-app](https://nieuwsnestje.vercel.app/)
 
-## How can I deploy this project?
+*Dit project is gemaakt in het kader van een onderwijsproject en richt zich op kindvriendelijke nieuwsconsumptie via digitale tools.*
 
-Simply open [Lovable](https://lovable.dev/projects/9eb22420-b1de-4bcd-8d34-ccd442f16f41) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
