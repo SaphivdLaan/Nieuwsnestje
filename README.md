@@ -18,6 +18,8 @@ Bekijk het live prototype: [https://nieuwsnestje.vercel.app/](https://nieuwsnest
 - **Leerkrachtfilters** – Thema’s en hoeveelheid content aanpasbaar
 - **Visueel rustige interface** – Ontwikkeld voor jonge lezers met weinig tekst en duidelijke iconen
 
+![Alt-tekst](public/Nieuwsnestje-screenshot.png)
+
 ## Technische stack
 
 - **React + TypeScript** – Voor snelle en schaalbare ontwikkeling
